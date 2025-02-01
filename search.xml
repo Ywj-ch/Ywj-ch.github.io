@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Linux（Centos7）安装docker、mysql踩坑总结</title>
+      <link href="/2025/02/01/Linux%EF%BC%88Centos7%EF%BC%89%E5%AE%89%E8%A3%85docker%E3%80%81mysql%E8%B8%A9%E5%9D%91%E6%80%BB%E7%BB%93/"/>
+      <url>/2025/02/01/Linux%EF%BC%88Centos7%EF%BC%89%E5%AE%89%E8%A3%85docker%E3%80%81mysql%E8%B8%A9%E5%9D%91%E6%80%BB%E7%BB%93/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>本文主要是记录了在 CentOS 7 上安装 Docker 和 MySQL 时遇到的一些问题，主要是由于镜像源未配置正确，导致无法顺利下载所需的依赖包。下面将介绍在安装过程中遇到的困难，并分享如何通过配置合适的镜像源来解决这些问题，从而顺利完成 Docker 和 MySQL 的安装，希望能够帮到有需要的人。</p></blockquote><h4 id="一、安装准备"><a href="#一、安装准备" class="headerlink" title="一、安装准备"></a>一、安装准备</h4><blockquote><p>系统版本：CentOS 7</p><p>先安装 yum：</p></blockquote><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure><blockquote><p>执行之前先配置一下镜像源，输入以下命令进入配置文件：</p></blockquote><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">vim /etc/yum.repos.d/CentOS-Base.repo</span><br></pre></td></tr></table></figure><blockquote><p>再将 mirrorlist 注释掉然后将 baseurl 改为阿里云镜像，然后保存退出</p></blockquote><p><img src="https://api.smain.cn/pics/pic_8fcb7204.png" alt="pic_8fcb7204.png"></p><blockquote><p>一定要将 mirrorlist 注释掉！不然还是会直接访问官方源导致下载失败！</p></blockquote><blockquote><p>输入下面的命令检验是否安装成功：</p></blockquote><p><img src="https://api.smain.cn/pics/pic_22eea1b9.png" alt="pic_22eea1b9.png"></p><blockquote><p>当然不排除网络问题，可以先用 ping 命令测试一下网络是否连通：</p></blockquote><p><img src="https://api.smain.cn/pics/pic_869db52c.png" alt="pic_869db52c.png"></p><blockquote><p>只要网络连通，并且配置文件修改无误就肯定能安装成功。</p></blockquote><h4 id="二、安装-Docker"><a href="#二、安装-Docker" class="headerlink" title="二、安装 Docker"></a>二、安装 Docker</h4><blockquote><p>执行下列命令安装：</p></blockquote><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br></pre></td></tr></table></figure><blockquote><p>下面是 Docker 的一些常用命令：</p></blockquote><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"># 启动Docker</span><br><span class="line">systemctl start docker</span><br><span class="line"></span><br><span class="line"># 停止Docker</span><br><span class="line">systemctl stop docker</span><br><span class="line"></span><br><span class="line"># 重启</span><br><span class="line">systemctl restart docker</span><br><span class="line"></span><br><span class="line"># 设置开机自启</span><br><span class="line">systemctl enable docker</span><br><span class="line"></span><br><span class="line"># 执行docker ps命令，如果不报错，说明安装启动成功</span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"># 列出本地 Docker 主机上已经下载或构建的所有镜像</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure><blockquote><p>可以看到刚刚安装好 docker 后是没有镜像的：</p></blockquote><p><img src="https://api.smain.cn/pics/pic_e644b8d0.png" alt="pic_e644b8d0.png"></p><h4 id="三、安装-MySQL"><a href="#三、安装-MySQL" class="headerlink" title="三、安装 MySQL"></a>三、安装 MySQL</h4><blockquote><p>现在要使用 docker 安装 mysql 镜像，注意如果之前有在虚拟机上安装过 mysql 要先停掉，不然会端口冲突：</p></blockquote><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">systemctl stop mysqld</span><br></pre></td></tr></table></figure><blockquote><p>如果直接 docker pull mysql，多半会报错：</p></blockquote><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Error response from daemon: Get <span class="string">&quot;https://registry-1.docker.io/v2/&quot;</span>: net/http: request canceled <span class="keyword">while</span> waiting <span class="keyword">for</span> <span class="title function_">connection</span> <span class="params">(Client.Timeout exceeded <span class="keyword">while</span> awaiting headers)</span></span><br></pre></td></tr></table></figure><blockquote><p>所以还是先配置镜像，值得一提的是在写这篇文章的时候阿里云的镜像加速已经停用了，所以得找别的镜像。</p></blockquote><blockquote><p>创建一个 docker 的配置文件，然后设置镜像源：</p></blockquote><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"># 创建目录</span><br><span class="line">mkdir -p /etc/docker</span><br><span class="line"></span><br><span class="line">#创建文件</span><br><span class="line">touch daemon.json</span><br><span class="line"></span><br><span class="line">#进入编辑</span><br><span class="line">vim /etc/docker/daemon.json</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;https://gallery.ecr.aws/&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://gitverse.ru/docs/artifactory/gitverse-registry/&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://docker.lmirror.top&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://atomhub.openatom.cn/&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>这几个镜像目前测试是有效的，然后再 docker pull mysql</p><p>可以看到很快就下好了，再使用 docker images：</p></blockquote><p><img src="https://api.smain.cn/pics/pic_dd193e67.png" alt="pic_dd193e67.png"></p><blockquote><p>成功拉取！最后下载 mysql：</p></blockquote><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name mysql \</span><br><span class="line">  -p <span class="number">3306</span>:<span class="number">3306</span> \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=<span class="number">123</span> \</span><br><span class="line">  mysql</span><br></pre></td></tr></table></figure><blockquote><p>其中设置的用户名是 root ，密码是 123，如有需要自行更改。</p></blockquote><p><img src="https://api.smain.cn/pics/pic_8fda741d.png" alt="pic_8fda741d.png"></p><blockquote><p>安装成功！来测试一下能否连接成功：</p><p>在 navicat 中新建连接，其中 Host 填你自己的虚拟机 IP 地址</p><p>使用 ifconfig 即可查看</p></blockquote><p><img src="https://api.smain.cn/pics/pic_c0b322a5.png" alt="pic_c0b322a5.png"></p><p><img src="https://api.smain.cn/pics/pic_bbd51289.png" alt="pic_bbd51289.png"></p><h4 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h4><blockquote><p>最后有几点需要注意：</p><p>1、重新启动虚拟机后需要再次停用原来的 mysql 防止端口冲突</p><p>2、开启 dokcer 后 mysql 并没有一并被开启，需要输入 dokcer start mysql 开启</p><p>3、如果发现数据库连接不上了可以考虑关闭虚拟机的防火墙</p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"># 查看防火墙状态</span><br><span class="line">firewall-cmd --state</span><br><span class="line"></span><br><span class="line"># 关闭防火墙</span><br><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+            <tag> linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>我的第一篇博客文章</title>
+      <link href="/2025/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/"/>
+      <url>/2025/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="我的第一篇博客文章"><a href="#我的第一篇博客文章" class="headerlink" title="我的第一篇博客文章"></a>我的第一篇博客文章</h2><p>你好，这里是我的第一篇博客文章。<br>你可以在这里添加一些内容，比如 Markdown 格式的文本、图片、链接等。<br>你也可以在主题的配置文件中添加一些自定义的样式和脚本，以实现一些特殊的功能。<br>如果你需要帮助，请查阅 <a href="https://butterfly.js.org/">Butterfly 文档</a>。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> test </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
