@@ -40,27 +40,10 @@ python migrate_csdn.py
 source/images/
 ├── 2025/
 │   ├── leetcode-1863/
-│   │   ├── 1.png
-│   │   └── 2.png
 │   └── linux-docker-mysql/
-│       ├── 1.png
-│       └── 2.png
 └── 2024/
     └── hexo-blog-setup/
-        └── ...
 ```
-
-## 配置选项
-
-在 `config.py` 中可修改：
-
-| 选项 | 说明 | 默认值 |
-|------|------|--------|
-| `POSTS_DIR` | 文章目录 | `source/_posts` |
-| `IMAGES_DIR` | 图片目录 | `source/images` |
-| `DATA_FILE` | 映射文件 | `data.md` |
-| `TIMEOUT` | 下载超时 | 15 秒 |
-| `MAX_RETRIES` | 最大重试 | 3 次 |
 
 ## 故障排除
 
@@ -74,27 +57,12 @@ source/images/
 - 运行 `hexo server` 预览
 - 清除浏览器缓存
 
-## 回滚方法
-
-如果迁移后出现问题，可以从备份恢复：
-
-```bash
-# 删除已修改的文章
-rm -rf source/_posts/*
-
-# 恢复备份
-cp -r source/_posts_backup_时间戳/* source/_posts/
-```
-
 ## 成功案例
 
 本次项目迁移成果：
 - ✅ 下载图片：161 张
 - ✅ 处理文章：6 篇
-- ✅ 图片目录：按文章分类
-- ✅ 链接替换：全部完成
 
 ---
 
-**工具版本**：v1.0  
 **最后更新**：2026-03-01

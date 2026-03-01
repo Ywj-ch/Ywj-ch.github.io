@@ -4,27 +4,42 @@
  */
 
 /* ========== 遮罩透明度 ========== */
-/* 白天模式遮罩稍微不透明 */
+/* 页脚完全透明，直接显示背景 */
 #footer::before {
-  background: rgba(0, 0, 0, 0.2) !important; /* 这里设置为 5% 不透明 */
+  background: transparent !important;
+}
+#footer {
+  background: transparent !important;
 }
 
+/* 白天模式遮罩稍微不透明 */
 #page-header::before {
   background: rgba(0, 0, 0, 0.2) !important;
 }
 
-/* 夜间模式遮罩稍微不透明 */
+/* 夜间模式页脚完全透明 */
 [data-theme="dark"] #footer::before {
-  background: rgba(
-    0,
-    0,
-    0,
-    0.15
-  ) !important; /* 夜间模式可以稍微加深一点，比如 15% 不透明 */
+  background: transparent !important;
+}
+[data-theme="dark"] #footer {
+  background: transparent !important;
 }
 
+/* 夜间模式遮罩稍微不透明 */
 [data-theme="dark"] #page-header::before {
   background: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ========== 运行时间计时器样式 ========== */
+#runtimeshow {
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  margin-top: 10px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+#runtimeshow .sand-clock {
+  margin-left: 5px;
 }
 
 /* 小冰分类分类磁铁黑夜模式适配 */
