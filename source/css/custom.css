@@ -30,6 +30,15 @@
   background: rgba(0, 0, 0, 0.15) !important;
 }
 
+/* ========== 页脚版权信息放大 ========== */
+#footer .copyright,
+#footer .framework-info {
+  font-size: 16px !important;
+}
+#footer-wrap {
+  padding-bottom: 20px !important;
+}
+
 /* ========== 运行时间计时器样式（页脚显示） ========== */
 /* 强制隐藏所有非页脚的运行时间元素（防止重复显示） */
 #fps #runtimeshow,
@@ -46,8 +55,9 @@ body > #runtimeshow,
   text-align: center;
   color: #fff;
   font-size: 14px;
-  margin-top: 10px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  margin-top: -10px; /* 向上移动 */
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   display: block !important;
 }
 /* 全局规则：任何不在#footer 内的 runtimeshow 都隐藏 */
@@ -64,9 +74,15 @@ body > #runtimeshow,
   animation: sand-clock-rotate 3s linear infinite;
 }
 @keyframes sand-clock-rotate {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(180deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* 小冰分类分类磁铁黑夜模式适配 */
