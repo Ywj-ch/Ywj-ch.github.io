@@ -18,33 +18,33 @@ swiper_index: 5
 
 > 首先准备一个服务器，我这里用的是阿里云 ：
 
-![pic_1730b086.png](https://api.smain.cn/pics/pic_1730b086.png)
+![pic_1730b086.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/1.png)
 
-![pic_93189640.png](https://api.smain.cn/pics/pic_93189640.png)
+![pic_93189640.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/2.png)
 
 > 第一次购买一般都会有优惠，而且对于一般的单体项目而言 2 核 2G 的配置也够用了，当然也有 3 个月的试用版本。
 
 > 完成之后进入控制台第一件事就是去你左侧边栏的安全组里面开放端口，这样才能从远程访问。
 
-![pic_78a16574.png](https://api.smain.cn/pics/pic_78a16574.png)
+![pic_78a16574.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/3.png)
 
-![pic_ef901e7b.png](https://api.smain.cn/pics/pic_ef901e7b.png)
+![pic_ef901e7b.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/4.png)
 
 > 端口范围根据需求开放，一般是 3306 mysql、80 nginx 代理、13103 这里是宝塔面板的端口，什么是宝塔面板后面会讲到，下面 3 个端口是默认初始化好的。
 
 > 然后进入实例面板重新设置一下你的服务器密码：
 
-![pic_607c2eda.png](https://api.smain.cn/pics/pic_607c2eda.png)
+![pic_607c2eda.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/5.png)
 
 > 修改完成之后就可以试着连接你的服务器了，我这里使用的是 Xshell：
 
-![pic_a2720479.png](https://api.smain.cn/pics/pic_a2720479.png)
+![pic_a2720479.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/6.png)
 
 > 然后输入你刚才重新设置的密码并点击连接：
 
-![pic_38be3af4.png](https://api.smain.cn/pics/pic_38be3af4.png)
+![pic_38be3af4.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/7.png)
 
-![pic_82b1a136.png](https://api.smain.cn/pics/pic_82b1a136.png)
+![pic_82b1a136.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/8.png)
 
 #### 2.2、安装所需环境
 
@@ -56,7 +56,7 @@ swiper_index: 5
 
 > 这里我们使用宝塔面板来管理我们的 Linux 服务器：
 
-![pic_b3dc1254.png](https://api.smain.cn/pics/pic_b3dc1254.png)
+![pic_b3dc1254.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/9.png)
 
 > 直接复制代码贴到 Xshell 执行即可：
 
@@ -66,19 +66,19 @@ if [ -f /usr/bin/curl ];then curl -sSO https://download.bt.cn/install/install_pa
 
 > 安装好后会出现外网地址和用户名和密码，打开外网地址后就能看到宝塔登录界面。
 
-![pic_b3c89e3a.png](https://api.smain.cn/pics/pic_b3c89e3a.png)
+![pic_b3c89e3a.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/10.png)
 
-![pic_b83c902c.png](https://api.smain.cn/pics/pic_b83c902c.png)
+![pic_b83c902c.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/11.png)
 
 > 如果访问不通就是你没有放行端口，进入阿里云安全组里面去放行对应的端口即可。
 
 > 进入控制面板后直接在右下角的软件商店中安装所需环境：
 
-![pic_25f14775.png](https://api.smain.cn/pics/pic_25f14775.png)
+![pic_25f14775.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/12.png)
 
 > 点开首页就可以清楚的看到我们服务器的整体情况了：
 
-![pic_0dd8d85e.png](https://api.smain.cn/pics/pic_0dd8d85e.png)
+![pic_0dd8d85e.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/13.png)
 
 ### 三、后端部署
 
@@ -107,11 +107,11 @@ if [ -f /usr/bin/curl ];then curl -sSO https://download.bt.cn/install/install_pa
 
 > 在对后端项目进行打包之前还需要做一些修改，如果你的配置文件不是动态加载的话那就去修改一下你的数据库连接配置：
 
-![pic_45a5d47b.png](https://api.smain.cn/pics/pic_45a5d47b.png)
+![pic_45a5d47b.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/14.png)
 
 > 然后将可以进行打包部署了，在你父模块（如果是聚合工程的话）的 lifecycle 下先运行 clean 再运行 package 进行打包：
 
-![pic_991cbf5d.png](https://api.smain.cn/pics/pic_991cbf5d.png)
+![pic_991cbf5d.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/15.png)
 
 > 打包完成后会在你的 target 目录下生成对应的.jar 包，然后将其上传到服务器上。
 
@@ -119,9 +119,9 @@ if [ -f /usr/bin/curl ];then curl -sSO https://download.bt.cn/install/install_pa
 
 > 在宝塔面板中创建数据库并导入 sql 脚本：
 
-![pic_72876713.png](https://api.smain.cn/pics/pic_72876713.png)
+![pic_72876713.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/16.png)
 
-![pic_dedc1972.png](https://api.smain.cn/pics/pic_dedc1972.png)
+![pic_dedc1972.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/17.png)
 
 > 在你的数据库根目录下启动终端运行下面一段代码即可将当前数据库的数据导出为.sql 脚本：
 
@@ -136,7 +136,7 @@ mysqldump -u username -p database_name > /path/to/backup.sql
 
 > 运行后会提示你输入数据库密码，完成后即可成功导出。
 
-![pic_adfe5b50.png](https://api.smain.cn/pics/pic_adfe5b50.png)
+![pic_adfe5b50.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/18.png)
 
 #### 3.3、测试启动
 
@@ -157,7 +157,7 @@ nohup java -jar 你的项目.jar --server.port=8080 > app.log 2>&1 &
 >
 >   在命令末尾加 `&` 可以使该命令在后台运行，不会阻塞当前终端。你可以继续在终端中进行其他操作。
 
-![pic_87b54246.png](https://api.smain.cn/pics/pic_87b54246.png)
+![pic_87b54246.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/19.png)
 
 > ok 没有问题，下面进入前端部署。
 
@@ -173,15 +173,15 @@ npm run build
 
 > 具体情况可以结合你自己 package.json 文件里面的设置执行：
 
-![pic_f4902b02.png](https://api.smain.cn/pics/pic_f4902b02.png)
+![pic_f4902b02.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/20.png)
 
 > 打包完成后会在你项目的第一级目录下生成 dist 文件夹：
 
-![pic_0c1a0aea.png](https://api.smain.cn/pics/pic_0c1a0aea.png)
+![pic_0c1a0aea.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/21.png)
 
 > 然后将这个文件夹上传到服务器，我个人的习惯是和后端 jar 包放在一起：
 
-![pic_2998d1e6.png](https://api.smain.cn/pics/pic_2998d1e6.png)
+![pic_2998d1e6.png](/source/images/Spring-Boot-Vue-前后端分离项目上线实记/22.png)
 
 #### 4.2、nginx 配置
 

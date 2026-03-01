@@ -28,17 +28,17 @@ vim /etc/yum.repos.d/CentOS-Base.repo
 
 > 再将 mirrorlist 注释掉然后将 baseurl 改为阿里云镜像，然后保存退出
 
-![pic_8fcb7204.png](https://api.smain.cn/pics/pic_8fcb7204.png)
+![pic_8fcb7204.png](/source/images/Linux（Centos7）安装docker、mysql踩坑总结/1.png)
 
 > 一定要将 mirrorlist 注释掉！不然还是会直接访问官方源导致下载失败！
 
 > 输入下面的命令检验是否安装成功：
 
-![pic_22eea1b9.png](https://api.smain.cn/pics/pic_22eea1b9.png)
+![pic_22eea1b9.png](/source/images/Linux（Centos7）安装docker、mysql踩坑总结/2.png)
 
 > 当然不排除网络问题，可以先用 ping 命令测试一下网络是否连通：
 
-![pic_869db52c.png](https://api.smain.cn/pics/pic_869db52c.png)
+![pic_869db52c.png](/source/images/Linux（Centos7）安装docker、mysql踩坑总结/3.png)
 
 > 只要网络连通，并且配置文件修改无误就肯定能安装成功。
 
@@ -74,7 +74,7 @@ docker images
 
 > 可以看到刚刚安装好 docker 后是没有镜像的：
 
-![pic_e644b8d0.png](https://api.smain.cn/pics/pic_e644b8d0.png)
+![pic_e644b8d0.png](/source/images/Linux（Centos7）安装docker、mysql踩坑总结/4.png)
 
 #### 三、安装 MySQL
 
@@ -120,7 +120,7 @@ vim /etc/docker/daemon.json
 >
 > 可以看到很快就下好了，再使用 docker images：
 
-![pic_dd193e67.png](https://api.smain.cn/pics/pic_dd193e67.png)
+![pic_dd193e67.png](/source/images/Linux（Centos7）安装docker、mysql踩坑总结/5.png)
 
 > 成功拉取！最后下载 mysql：
 
@@ -135,7 +135,7 @@ docker run -d \
 
 > 其中设置的用户名是 root ，密码是 123，如有需要自行更改。
 
-![pic_8fda741d.png](https://api.smain.cn/pics/pic_8fda741d.png)
+![pic_8fda741d.png](/source/images/Linux（Centos7）安装docker、mysql踩坑总结/6.png)
 
 > 安装成功！来测试一下能否连接成功：
 >
@@ -143,9 +143,9 @@ docker run -d \
 >
 > 使用 ifconfig 即可查看
 
-![pic_c0b322a5.png](https://api.smain.cn/pics/pic_c0b322a5.png)
+![pic_c0b322a5.png](/source/images/Linux（Centos7）安装docker、mysql踩坑总结/7.png)
 
-![pic_bbd51289.png](https://api.smain.cn/pics/pic_bbd51289.png)
+![pic_bbd51289.png](/source/images/Linux（Centos7）安装docker、mysql踩坑总结/8.png)
 
 #### 四、总结
 
