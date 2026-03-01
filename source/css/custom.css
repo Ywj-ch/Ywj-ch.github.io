@@ -39,8 +39,19 @@
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
   display: block;
 }
+#footer #runtimeshow #runtime-counter {
+  margin: 0 5px;
+}
+/* 沙漏转动动画 */
 #footer #runtimeshow .sand-clock {
   margin-left: 5px;
+  display: inline-block;
+  animation: sand-clock-rotate 3s linear infinite;
+}
+@keyframes sand-clock-rotate {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* 小冰分类分类磁铁黑夜模式适配 */
