@@ -45,7 +45,7 @@ swiper_index: 2
 
 > 若依的后端项目主要分为六个模块，他们之间的依赖关系如下图所示：
 
-![pic_59f382bd.png](https://api.smain.cn/pics/pic_59f382bd.png)
+![pic_59f382bd.png](https://i-blog.csdnimg.cn/direct/30014f5b67414420badd1675c1ee451c.png)
 
 下面我们来分析一下每个模块的具体功能
 

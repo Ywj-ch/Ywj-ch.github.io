@@ -111,7 +111,7 @@ footer_img: false
 
 # Website Background
 # Can set it to color or image url
-background: /img/背景图3.jpg
+background: /img/【哲风壁纸】海边-自然-风景.png
 
 cover:
   # Disable the cover or not
@@ -270,10 +270,10 @@ footer:
   owner:
     enable: true
     since: 2024
-  custom_text: |
-    <span style='color:#FFD700; font-weight:bold;'>在无垠的宇宙中，旅行者1号仍在沉默地前行，它越过光年，穿梭在深邃而寂静的星海之中 ✨。</span><br>
-    <span style='color:#87CEEB; font-weight:bold;'>而某个未知的轨道上，也许正有一束微光，在亿万年的时空里飘荡，寻找与它共鸣的星辰 💫。</span>
-  copyright: false
+  # custom_text: |
+  #   <span style='color:#FFD700; font-weight:bold;'>竹子用了4年的时间， 仅仅长了3cm， 从第五年开始， 以每天30cm的速度疯狂地生长， 仅仅用了六周的时间就长到了15米。</span><br>
+  #   <span style='color:#87CEEB; font-weight:bold;'>其实，在前面的四年， 竹子将根在土壤里延伸了数百平米。 做人做事亦是如此， 不要担心你此时此刻的付出得不到回报， 因为这些付出都是为了扎根。</span>
+  copyright: flase
 
 # --------------------------------------
 # Aside Settings
@@ -1103,7 +1103,7 @@ CDN:
     # pangu:
     fancybox_css_v4: https://cdn.staticfile.org/fancyapps-ui/4.0.31/fancybox.min.css
     fancybox_v4: https://cdn.staticfile.org/fancyapps-ui/4.0.31/fancybox.umd.min.js
-    # medium_zoom: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/medium-zoom/1.0.6/medium-zoom.min.js
+    medium_zoom: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/medium-zoom/1.0.6/medium-zoom.min.js
     # snackbar_css: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/node-snackbar/0.1.16/snackbar.min.css
     # snackbar: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/node-snackbar/0.1.16/snackbar.min.js
     # activate_power_mode:
