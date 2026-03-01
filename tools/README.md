@@ -8,7 +8,7 @@ tools/
 ├── image-migration/             # 图片迁移工具
 │   ├── README.md               # 使用说明
 │   ├── main.py                 # 主程序（废弃）
-│   ├── migrate_csdn.py         # CSDN 图片下载（推荐使用）⭐
+│   ├── migrate_csdn.py         # CSDN 图片下载
 │   ├── migrate_simple.py       # 简化版迁移工具
 │   ├── scanner.py              # 扫描模块
 │   ├── downloader.py           # 下载模块
@@ -37,14 +37,14 @@ python migrate_csdn.py
 
 ### 各模块说明
 
-| 文件 | 作用 | 状态 |
-|------|------|------|
-| `migrate_csdn.py` | 从 CSDN 下载图片并替换链接 | ✅ 推荐使用 |
-| `migrate_simple.py` | 简化版迁移工具 | ⚠️ 备用方案 |
-| `scanner.py` | 扫描 Markdown 中的图片链接 | 🔧 模块 |
-| `downloader.py` | 下载图片到本地 | 🔧 模块 |
-| `replacer.py` | 替换 Markdown 中的链接 | 🔧 模块 |
-| `config.py` | 配置路径和参数 | 🔧 模块 |
+| 文件                | 作用                       | 状态        |
+| ------------------- | -------------------------- | ----------- |
+| `migrate_csdn.py`   | 从 CSDN 下载图片并替换链接 | ✅ 推荐使用 |
+| `migrate_simple.py` | 简化版迁移工具             | ⚠️ 备用方案 |
+| `scanner.py`        | 扫描 Markdown 中的图片链接 | 🔧 模块     |
+| `downloader.py`     | 下载图片到本地             | 🔧 模块     |
+| `replacer.py`       | 替换 Markdown 中的链接     | 🔧 模块     |
+| `config.py`         | 配置路径和参数             | 🔧 模块     |
 
 ## 注意事项
 
