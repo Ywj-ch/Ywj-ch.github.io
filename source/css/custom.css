@@ -31,13 +31,20 @@
 }
 
 /* ========== 运行时间计时器样式（页脚显示） ========== */
+/* 强制隐藏非页脚的运行时间元素（防止重复显示） */
+#fps #runtimeshow,
+#aside-content #runtimeshow,
+.card-widget #runtimeshow {
+  display: none !important;
+}
+/* 只保留页脚的运行时间 */
 #footer #runtimeshow {
   text-align: center;
   color: #fff;
   font-size: 14px;
   margin-top: 10px;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-  display: block;
+  display: block !important;
 }
 #footer #runtimeshow #runtime-counter {
   margin: 0 5px;
