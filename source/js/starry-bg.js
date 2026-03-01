@@ -1,3 +1,9 @@
+/**
+ * 星空背景动画
+ * 功能：Canvas 绘制星空粒子效果，支持深色模式
+ * 依赖：#universe Canvas 元素
+ */
+
 function dark() {
   window.requestAnimationFrame =
     window.requestAnimationFrame ||

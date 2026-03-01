@@ -1,3 +1,9 @@
+/**
+ * 自定义样式
+ * 包含：遮罩透明度、字体、导航菜单、霓虹灯效果、星空背景、鼠标跟随等
+ */
+
+/* ========== 遮罩透明度 ========== */
 /* 白天模式遮罩稍微不透明 */
 #footer::before {
   background: rgba(0, 0, 0, 0.2) !important; /* 这里设置为 5% 不透明 */
@@ -33,6 +39,7 @@
   color: #f2f2f2;
 }
 
+/* ========== 自定义字体 ========== */
 /* 字体 */
 @font-face {
   font-family: "YSHST";
@@ -50,6 +57,7 @@ body {
   font-family: "YSHST", sans-serif !important;
 }
 
+/* ========== 导航菜单 ========== */
 /* 一级菜单居中 */
 #nav .menus_items {
   position: absolute !important;
@@ -66,6 +74,7 @@ body {
   left: -72px;
 }
 
+/* ========== 霓虹灯效果 ========== */
 /* 霓虹灯 */
 /* 日间模式不生效 */
 [data-theme="light"] #site-name,
@@ -185,6 +194,7 @@ body {
   }
 }
 
+/* ========== 星空背景 ========== */
 /* 背景宇宙星光  */
 #universe {
   display: block;
@@ -202,6 +212,7 @@ body {
   z-index: -1;
 }
 
+/* ========== 侧边栏个人信息卡片 ========== */
 /* 侧边栏个人信息卡片动态渐变色 */
 #aside-content > .card-widget.card-info {
   background: linear-gradient(
@@ -264,6 +275,7 @@ body {
   border-radius: 8px;
 }
 
+/* ========== 鼠标跟随 ========== */
 /* 鼠标样式 */
 #cursor {
   position: fixed;
@@ -301,6 +313,7 @@ body {
   -o-transform: scale(0.5);
 }
 
+/* ========== 帧率显示器 ========== */
 /* 帧率检测 */
 #fps {
   position: fixed;

@@ -1,3 +1,9 @@
+/**
+ * 友链功能增强
+ * 功能：快速填写友链格式、表情放大预览
+ * 依赖：评论系统
+ */
+
 var leonus = {
   linkCom: (e) => {
     var t = document.querySelector(".el-textarea__inner");

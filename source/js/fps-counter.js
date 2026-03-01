@@ -1,3 +1,9 @@
+/**
+ * 帧率计数器
+ * 功能：页面左下角显示当前 FPS 和流畅度评价
+ * 存储：localStorage.fpson = "1" 启用，"0" 禁用
+ */
+
 if (
   window.localStorage.getItem("fpson") == undefined ||
   window.localStorage.getItem("fpson") == "1"

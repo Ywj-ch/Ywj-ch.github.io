@@ -1,9 +1,22 @@
+# 系统文件
 .DS_Store
 Thumbs.db
+
+# Hexo 生成文件
 db.json
 *.log
-node_modules/
 public/
+
+# 依赖
+node_modules/
+
+# 部署目录
 .deploy*/
-_multiconfig.yml__pycache__/
+
+# 配置文件
+_multiconfig.yml
+
+# Python 缓存
+__pycache__/
 *_backup_*/
+tools/__pycache__/

@@ -1,3 +1,8 @@
+/**
+ * 浏览器标题动画
+ * 功能：离开页面时显示"网络断开"，返回时显示"网络恢复"
+ */
+
 var OriginTitile = document.title;
 var titleTime;
 document.addEventListener("visibilitychange", function () {
