@@ -31,10 +31,14 @@
 }
 
 /* ========== 运行时间计时器样式（页脚显示） ========== */
-/* 强制隐藏非页脚的运行时间元素（防止重复显示） */
+/* 强制隐藏所有非页脚的运行时间元素（防止重复显示） */
 #fps #runtimeshow,
 #aside-content #runtimeshow,
-.card-widget #runtimeshow {
+.card-widget #runtimeshow,
+body > #runtimeshow,
+#web_bg + #runtimeshow,
+#rightside #runtimeshow,
+#sidebar #runtimeshow {
   display: none !important;
 }
 /* 只保留页脚的运行时间 */
@@ -45,6 +49,10 @@
   margin-top: 10px;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
   display: block !important;
+}
+/* 全局规则：任何不在#footer 内的 runtimeshow 都隐藏 */
+#runtimeshow:not(#footer #runtimeshow) {
+  display: none !important;
 }
 #footer #runtimeshow #runtime-counter {
   margin: 0 5px;
