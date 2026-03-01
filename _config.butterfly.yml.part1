@@ -1,0 +1,200 @@
+# --------------------------------------
+# Hexo Butterfly Theme Configuration
+# If you have any questions, please refer to the documentation
+# Chinese: https://butterfly.js.org/
+# English: https://butterfly.js.org/en/
+# --------------------------------------
+
+# --------------------------------------
+# Navigation Settings
+# --------------------------------------
+
+nav:
+  # Navigation bar logo image
+  logo:
+  display_title: true
+  # Whether to fix navigation bar
+  fixed: false
+
+menu:
+  首页: / || fas fa-home
+  归档: /archives/ || fas fa-archive
+  标签: /tags/ || fas fa-tags
+  分类: /categories/ || fas fa-folder-open
+  列表||fa fa-list || hide:
+    音乐: /music/ || fas fa-music
+    照片: /picture/ || fas fa-images
+    电影: /movies/ || fas fa-video
+  留言板: /comments/ || fas fa-envelope-open
+  友链: /link/ || fas fa-link
+  关于: /about/ || fas fa-heart
+
+# --------------------------------------
+# Code Blocks Settings
+# --------------------------------------
+
+code_blocks:
+  # Code block theme: darker / pale night / light / ocean / false
+  theme: light
+  macStyle: false
+  # Code block height limit (unit: px)
+  height_limit: false
+  word_wrap: false
+
+  # Toolbar
+  copy: true
+  language: true
+  # true: shrink the code blocks | false: expand the code blocks | none: expand code blocks and hide the button
+  shrink: false
+  fullpage: false
+
+#highlight_theme:
+highlight_theme: mac #  darker / pale night / light / ocean / mac / mac light / false 代码主题
+highlight_copy: true # 复制按钮
+highlight_lang: false # 是否显示代码语言
+highlight_shrink: true # true: 代码块默认不展开 / false: 代码块默认展开 | none: 展开并隐藏折叠按钮
+highlight_height_limit: false # unit: px
+code_word_wrap: true #代码自动换行，关闭滚动条
+
+# 侧边栏的个人链接
+# Social media links
+# Formal:
+#   icon: link || the description || color
+social:
+  fas fa-book: https://blog.csdn.net/m0_74123949 || CSDN || '#d81e06'
+  fas fa-code-branch: https://gitee.com/Ywj-ee || Gitee || '#C71D23'
+
+# 灯笼开关 建议只在过年期间开启
+lantern:
+  enable: false
+
+# ----------------- ---------------------
+# Image Settings
+# --------------------------------------
+
+favicon: /img/favicon.png
+
+avatar:
+  img: /img/butterfly-icon.png
+  effect: false
+
+# Disable all banner images
+disable_top_img: false
+
+# If the banner of page not setting, it will show the default_top_img
+default_top_img: rgba(0, 0, 0, 0)
+
+# The banner image of index page
+index_img:
+
+# The banner image of archive page
+archive_img:
+
+# Note: tag page, not tags page
+tag_img:
+
+# The banner image of tag page, you can set the banner image for each tag
+# Format:
+#  - tag name: xxxxx
+tag_per_img:
+
+# Note: category page, not categories page
+category_img:
+
+# The banner image of category page, you can set the banner image for each category
+# Format:
+#  - category name: xxxxx
+category_per_img:
+
+# The background image of footer
+footer_img: false
+
+# Website Background
+# Can set it to color or image url
+background: /img/【哲风壁纸】海边-自然-风景.png
+
+cover:
+  # Disable the cover or not
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+  # When cover is not set, the default cover is displayed
+  default_cover:
+    - "/img/default-cover.jpg"
+
+# Replace Broken Images
+error_img:
+  flink: /img/friend_404.gif
+  post_page: /img/404.jpg
+
+# A simple 404 page
+error_404:
+  enable: true
+  subtitle: "Page Not Found"
+  background: /img/error-page.png
+
+post_meta:
+  # Home Page
+  page:
+    # Choose: created / updated / both
+    date_type: created
+    # Choose: date / relative
+    date_format: date
+    categories: true
+    tags: false
+    label: true
+  post:
+    # Choose: left / center
+    position: left
+    # Choose: created / updated / both
+    date_type: both
+    # Choose: date / relative
+    date_format: date
+    categories: true
+    tags: true
+    label: true
+
+# --------------------------------------
+# Index page settings
+# --------------------------------------
+
+# The top_img settings of home page
+# default: top img - full screen, site info - middle
+# The position of site info, eg: 300px/300em/300rem/10%
+index_site_info_top:
+# The height of top_img, eg: 300px/300em/300rem
+index_top_img_height:
+
+# The subtitle on homepage
+subtitle:
+  enable: true
+  effect: true
+  loop: true
+  source: false
+  # 如果有英文逗号' , ',请使用转义字元 &#44;
+  # 如果有英文双引号' " ',请使用转义字元 &quot;
+  sub:
+    - Dare to dream Live to shine! 🌟💫
+    - Time flows gently Cherish each moment! ⏳🍃
+
+# Article layout on the homepage
+# 1: Cover on the left, info on the right
+# 2: Cover on the right, info on the left
+# 3: Cover and info alternate between left and right
+# 4: Cover on top, info on the bottom
+# 5: Info displayed on the cover
+# 6: Masonry layout - Cover on top, info on the bottom
+# 7: Masonry layout - Info displayed on the cover
+index_layout: 3
+
+# Display the article introduction on homepage
+# 1: description
+# 2: both (if the description exists, it will show description, or show the auto_excerpt)
+# 3: auto_excerpt (default)
+# false: do not show the article introduction
+index_post_content:
+  method: 3
+  # If you set method to 2 or 3, the length need to config
+  length: 500
+
+# --------------------------------------
