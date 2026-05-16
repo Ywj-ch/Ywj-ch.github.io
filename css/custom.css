@@ -1,0 +1,561 @@
+/**
+ * 自定义样式
+ * 包含：遮罩透明度、字体、导航菜单、霓虹灯效果、星空背景、鼠标跟随等
+ */
+
+/* ========== 遮罩透明度 ========== */
+/* 页脚完全透明，直接显示背景 */
+#footer::before {
+  background: transparent !important;
+}
+#footer {
+  background: transparent !important;
+}
+
+/* 白天模式遮罩稍微不透明 */
+#page-header {
+  background-color: transparent !important;
+}
+#page-header::before {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 夜间模式页脚完全透明 */
+[data-theme="dark"] #footer::before {
+  background: transparent !important;
+}
+[data-theme="dark"] #footer {
+  background: transparent !important;
+}
+
+/* 夜间模式遮罩稍微不透明 */
+[data-theme="dark"] #page-header::before {
+  background: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ========== Liquid Glass 毛玻璃卡片 ========== */
+:root {
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  --card-hover-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --card-bg: rgba(18, 18, 18, 0.7);
+}
+
+.recent-post-item,
+.card-widget,
+#post {
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* ========== Spotlight 风格搜索弹窗 ========== */
+#search-mask {
+  background: rgba(0, 0, 0, 0.12) !important;
+}
+
+.search-dialog {
+  top: 15% !important;
+  width: 60vw !important;
+  max-width: 700px !important;
+  margin-left: 0 !important;
+  transform: translateX(-50%) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 24px !important;
+  padding: 24px !important;
+}
+
+[data-theme="dark"] .search-dialog {
+  background: rgba(28, 28, 28, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.search-dialog .search-nav {
+  display: none !important;
+}
+
+.search-dialog .local-search-box input {
+  font-size: 1.4em !important;
+  padding: 14px 24px !important;
+  border: none !important;
+  background: rgba(128, 128, 128, 0.1) !important;
+  border-radius: 12px !important;
+  outline: none !important;
+  transition: all 0.2s !important;
+}
+
+.search-dialog .local-search-box input:focus {
+  background: rgba(128, 128, 128, 0.15) !important;
+  box-shadow: 0 0 0 2px rgba(73, 177, 245, 0.4) !important;
+}
+
+.search-dialog hr {
+  display: none !important;
+}
+
+.search-dialog .search-result-list {
+  max-height: calc(80vh - 200px) !important;
+}
+
+.search-dialog .local-search-hit-item {
+  list-style: none !important;
+  margin: 0 0 12px !important;
+  padding: 12px 16px !important;
+  border-radius: 8px !important;
+  transition: background 0.2s !important;
+}
+
+.search-dialog .local-search-hit-item:hover {
+  background: rgba(128, 128, 128, 0.08) !important;
+}
+
+/* 弹窗动画增强 */
+@keyframes titleScale {
+  0% { opacity: 0; transform: scale(0.92) translateY(-10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes search_close {
+  0% { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.92) translateY(-10px); }
+}
+
+/* ========== 右侧浮窗毛玻璃按钮 ========== */
+#rightside > div > button,
+#rightside > div > a {
+  width: 40px !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  font-size: 14px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#rightside > div > button:hover,
+#rightside > div > a:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+[data-theme="dark"] #rightside > div > button,
+[data-theme="dark"] #rightside > div > a {
+  background: rgba(28, 28, 28, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 图标颜色 — 白天深色、黑夜白色 */
+#rightside > div > button i,
+#rightside > div > a i {
+  color: var(--font-color) !important;
+}
+
+[data-theme="dark"] #rightside > div > button i,
+[data-theme="dark"] #rightside > div > a i {
+  color: #fff !important;
+}
+
+#rightside-config i.fa-spin {
+  animation: none !important;
+}
+
+/* ========== 页脚版权信息放大 ========== */
+#footer .copyright,
+#footer .framework-info {
+  font-size: 16px !important;
+}
+#footer-wrap {
+  padding-bottom: 20px !important;
+}
+
+/* ========== 运行时间计时器样式（页脚显示） ========== */
+/* 强制隐藏所有非页脚的运行时间元素（防止重复显示） */
+#aside-content #runtimeshow,
+.card-widget #runtimeshow,
+body > #runtimeshow,
+#web_bg + #runtimeshow,
+#rightside #runtimeshow,
+#sidebar #runtimeshow {
+  display: none !important;
+}
+/* 只保留页脚的运行时间 */
+#footer #runtimeshow {
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  margin-top: -10px; /* 向上移动 */
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  display: block !important;
+}
+/* 全局规则：任何不在#footer 内的 runtimeshow 都隐藏 */
+#runtimeshow:not(#footer #runtimeshow) {
+  display: none !important;
+}
+#footer #runtimeshow #runtime-counter {
+  margin: 0 5px;
+}
+
+/* ========== 数字滚动效果 ========== */
+.digit-box {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 22px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.digit-box .num {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 22px;
+}
+.digit-box .num.enter {
+  animation: digit-enter 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.digit-box .num.leave {
+  animation: digit-leave 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+@keyframes digit-enter {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@keyframes digit-leave {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+
+.runtime-digits {
+  font-variant-numeric: tabular-nums;
+  margin: 0 5px;
+}
+.runtime-digits .unit {
+  margin: 0 2px;
+  vertical-align: middle;
+}
+
+/* 小冰分类分类磁铁黑夜模式适配 */
+/* 一般状态 */
+[data-theme="dark"] .magnet_link_context {
+  background: #1e1e1e;
+  color: antiquewhite;
+}
+/* 鼠标悬浮状态 */
+[data-theme="dark"] .magnet_link_context:hover {
+  background: #3ecdf1;
+  color: #f2f2f2;
+}
+
+/* ========== 导航菜单 ========== */
+/* 隐藏文章页导航栏中的文章标题 */
+#nav .nav-page-title {
+  display: none;
+}
+/* 一级菜单居中 */
+#nav .menus_items {
+  position: absolute !important;
+  width: fit-content !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+/* 子菜单横向展示 */
+#nav .menus_items .menus_item:hover .menus_item_child {
+  display: flex !important;
+}
+/* 这里的2是代表导航栏的第2个元素，即有子菜单的元素，可以按自己需求修改 */
+.menus_items .menus_item:nth-child(5) .menus_item_child {
+  left: -72px;
+}
+
+/* ========== 霓虹灯效果 ========== */
+/* 霓虹灯 */
+/* 日间模式不生效 */
+[data-theme="light"] #site-name,
+[data-theme="light"] #site-title,
+[data-theme="light"] #site-subtitle,
+[data-theme="light"] #post-info {
+  animation: none;
+}
+/* 夜间模式生效 */
+[data-theme="dark"] #site-name,
+[data-theme="dark"] #site-title {
+  animation: light_15px 10s linear infinite;
+}
+[data-theme="dark"] #site-subtitle {
+  animation: light_10px 10s linear infinite;
+}
+[data-theme="dark"] #post-info {
+  animation: light_5px 10s linear infinite;
+}
+/* 关键帧描述 */
+@keyframes light_15px {
+  0% {
+    text-shadow: #5636ed 0 0 15px;
+  }
+  12.5% {
+    text-shadow: #11ee5e 0 0 15px;
+  }
+  25% {
+    text-shadow: #f14747 0 0 15px;
+  }
+  37.5% {
+    text-shadow: #f1a247 0 0 15px;
+  }
+  50% {
+    text-shadow: #f1ee47 0 0 15px;
+  }
+  50% {
+    text-shadow: #b347f1 0 0 15px;
+  }
+  62.5% {
+    text-shadow: #002afa 0 0 15px;
+  }
+  75% {
+    text-shadow: #ed709b 0 0 15px;
+  }
+  87.5% {
+    text-shadow: #39c5bb 0 0 15px;
+  }
+  100% {
+    text-shadow: #5636ed 0 0 15px;
+  }
+}
+
+@keyframes light_10px {
+  0% {
+    text-shadow: #5636ed 0 0 10px;
+  }
+  12.5% {
+    text-shadow: #11ee5e 0 0 10px;
+  }
+  25% {
+    text-shadow: #f14747 0 0 10px;
+  }
+  37.5% {
+    text-shadow: #f1a247 0 0 10px;
+  }
+  50% {
+    text-shadow: #f1ee47 0 0 10px;
+  }
+  50% {
+    text-shadow: #b347f1 0 0 10px;
+  }
+  62.5% {
+    text-shadow: #002afa 0 0 10px;
+  }
+  75% {
+    text-shadow: #ed709b 0 0 10px;
+  }
+  87.5% {
+    text-shadow: #39c5bb 0 0 10px;
+  }
+  100% {
+    text-shadow: #5636ed 0 0 10px;
+  }
+}
+
+@keyframes light_5px {
+  0% {
+    text-shadow: #5636ed 0 0 5px;
+  }
+  12.5% {
+    text-shadow: #11ee5e 0 0 5px;
+  }
+  25% {
+    text-shadow: #f14747 0 0 5px;
+  }
+  37.5% {
+    text-shadow: #f1a247 0 0 15px;
+  }
+  50% {
+    text-shadow: #f1ee47 0 0 5px;
+  }
+  50% {
+    text-shadow: #b347f1 0 0 5px;
+  }
+  62.5% {
+    text-shadow: #002afa 0 0 5px;
+  }
+  75% {
+    text-shadow: #ed709b 0 0 5px;
+  }
+  87.5% {
+    text-shadow: #39c5bb 0 0 5px;
+  }
+  100% {
+    text-shadow: #5636ed 0 0 5px;
+  }
+}
+
+/* ========== 星空背景 ========== */
+/* 背景宇宙星光  */
+#universe {
+  display: block;
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* 这个是调置顶的优先级的，-1在文章页下面，背景上面，个人推荐这种 */
+  z-index: -1;
+}
+
+/* ========== 侧边栏个人信息卡片 ========== */
+/* 侧边栏个人信息卡片动态渐变色 */
+#aside-content > .card-widget.card-info {
+  background: linear-gradient(
+    -45deg,
+    #e8d8b9,
+    #eccec5,
+    #a3e9eb,
+    #bdbdf0,
+    #eec1ea
+  );
+  box-shadow: 0 0 5px rgb(66, 68, 68);
+  position: relative;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 10s ease infinite;
+  -moz-animation: Gradient 10s ease infinite;
+  animation: Gradient 10s ease infinite !important;
+}
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 黑夜模式适配 */
+[data-theme="dark"] #aside-content > .card-widget.card-info {
+  background: #191919ee;
+}
+
+/* 个人信息Follow me按钮 */
+#aside-content > .card-widget.card-info > #card-info-btn {
+  background-color: #3eb8be;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+#aside-content > .card-widget.card-info > #card-info-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ========== 鼠标跟随 ========== */
+/* 鼠标样式 */
+#cursor {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  /* 这里改变跟随的底色 */
+  background: rgb(57, 197, 187);
+  border-radius: 8px;
+  opacity: 0.25;
+  z-index: 10086;
+  pointer-events: none;
+  transition: 0.2s ease-in-out;
+  transition-property: background, opacity, transform;
+}
+
+#cursor.hidden {
+  opacity: 0;
+}
+
+#cursor.hover {
+  opacity: 0.1;
+  transform: scale(2.5);
+  -webkit-transform: scale(2.5);
+  -moz-transform: scale(2.5);
+  -ms-transform: scale(2.5);
+  -o-transform: scale(2.5);
+}
+
+#cursor.active {
+  opacity: 0.5;
+  transform: scale(0.5);
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  -o-transform: scale(0.5);
+}
+
+/* ========== 强制禁用所有入场动画 ========== */
+#content-inner,
+#footer,
+#page-header,
+#nav,
+#site-title,
+#site-subtitle,
+canvas,
+#web_bg {
+  animation: none !important;
+}
+.recent-post-item,
+.recent-post-info {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* ========== 首页卡片标题限制1行、最小高度 ========== */
+#recent-posts .recent-post-item:has(.post_cover) {
+  min-height: 280px;
+}
+
+#recent-posts .recent-post-item:has(.post_cover) .article-title {
+  -webkit-line-clamp: 1 !important;
+}
+
+/* ========== 隐藏文章内所有 HR ========== */
+#article-container hr {
+  display: none;
+}
