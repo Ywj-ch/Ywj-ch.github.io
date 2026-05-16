@@ -13,6 +13,9 @@
 }
 
 /* 白天模式遮罩稍微不透明 */
+#page-header {
+  background-color: transparent !important;
+}
 #page-header::before {
   background: rgba(0, 0, 0, 0.2) !important;
 }
@@ -30,6 +33,144 @@
   background: rgba(0, 0, 0, 0.15) !important;
 }
 
+/* ========== Liquid Glass 毛玻璃卡片 ========== */
+:root {
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  --card-hover-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --card-bg: rgba(18, 18, 18, 0.7);
+}
+
+.recent-post-item,
+.card-widget,
+#post {
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* ========== Spotlight 风格搜索弹窗 ========== */
+#search-mask {
+  background: rgba(0, 0, 0, 0.12) !important;
+}
+
+.search-dialog {
+  top: 15% !important;
+  width: 60vw !important;
+  max-width: 700px !important;
+  margin-left: 0 !important;
+  transform: translateX(-50%) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 24px !important;
+  padding: 24px !important;
+}
+
+[data-theme="dark"] .search-dialog {
+  background: rgba(28, 28, 28, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.search-dialog .search-nav {
+  display: none !important;
+}
+
+.search-dialog .local-search-box input {
+  font-size: 1.4em !important;
+  padding: 14px 24px !important;
+  border: none !important;
+  background: rgba(128, 128, 128, 0.1) !important;
+  border-radius: 12px !important;
+  outline: none !important;
+  transition: all 0.2s !important;
+}
+
+.search-dialog .local-search-box input:focus {
+  background: rgba(128, 128, 128, 0.15) !important;
+  box-shadow: 0 0 0 2px rgba(73, 177, 245, 0.4) !important;
+}
+
+.search-dialog hr {
+  display: none !important;
+}
+
+.search-dialog .search-result-list {
+  max-height: calc(80vh - 200px) !important;
+}
+
+.search-dialog .local-search-hit-item {
+  list-style: none !important;
+  margin: 0 0 12px !important;
+  padding: 12px 16px !important;
+  border-radius: 8px !important;
+  transition: background 0.2s !important;
+}
+
+.search-dialog .local-search-hit-item:hover {
+  background: rgba(128, 128, 128, 0.08) !important;
+}
+
+/* 弹窗动画增强 */
+@keyframes titleScale {
+  0% { opacity: 0; transform: scale(0.92) translateY(-10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes search_close {
+  0% { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.92) translateY(-10px); }
+}
+
+/* ========== 右侧浮窗毛玻璃按钮 ========== */
+#rightside > div > button,
+#rightside > div > a {
+  width: 40px !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  font-size: 14px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#rightside > div > button:hover,
+#rightside > div > a:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+[data-theme="dark"] #rightside > div > button,
+[data-theme="dark"] #rightside > div > a {
+  background: rgba(28, 28, 28, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 图标颜色 — 白天深色、黑夜白色 */
+#rightside > div > button i,
+#rightside > div > a i {
+  color: var(--font-color) !important;
+}
+
+[data-theme="dark"] #rightside > div > button i,
+[data-theme="dark"] #rightside > div > a i {
+  color: #fff !important;
+}
+
+#rightside-config i.fa-spin {
+  animation: none !important;
+}
+
 /* ========== 页脚版权信息放大 ========== */
 #footer .copyright,
 #footer .framework-info {
@@ -41,7 +182,6 @@
 
 /* ========== 运行时间计时器样式（页脚显示） ========== */
 /* 强制隐藏所有非页脚的运行时间元素（防止重复显示） */
-#fps #runtimeshow,
 #aside-content #runtimeshow,
 .card-widget #runtimeshow,
 body > #runtimeshow,
@@ -67,22 +207,49 @@ body > #runtimeshow,
 #footer #runtimeshow #runtime-counter {
   margin: 0 5px;
 }
-/* 沙漏转动动画 */
-#footer #runtimeshow .sand-clock {
-  margin-left: 5px;
+
+/* ========== 数字滚动效果 ========== */
+.digit-box {
+  position: relative;
   display: inline-block;
-  animation: sand-clock-rotate 3s linear infinite;
+  width: 14px;
+  height: 22px;
+  overflow: hidden;
+  vertical-align: middle;
 }
-@keyframes sand-clock-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.digit-box .num {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 22px;
+}
+.digit-box .num.enter {
+  animation: digit-enter 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.digit-box .num.leave {
+  animation: digit-leave 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+@keyframes digit-enter {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@keyframes digit-leave {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+
+.runtime-digits {
+  font-variant-numeric: tabular-nums;
+  margin: 0 5px;
+}
+.runtime-digits .unit {
+  margin: 0 2px;
+  vertical-align: middle;
 }
 
 /* 小冰分类分类磁铁黑夜模式适配 */
@@ -97,25 +264,11 @@ body > #runtimeshow,
   color: #f2f2f2;
 }
 
-/* ========== 自定义字体 ========== */
-/* 字体 */
-@font-face {
-  font-family: "YSHST";
-  src: url("/font/YSHaoShenTi-2.woff2") format("woff2"); /* 添加 format 指定字体格式 */
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-body {
-  font-family: "YSHST", -apple-system, sans-serif !important;
-}
-
-#site-title {
-  font-family: "YSHST", sans-serif !important;
-}
-
 /* ========== 导航菜单 ========== */
+/* 隐藏文章页导航栏中的文章标题 */
+#nav .nav-page-title {
+  display: none;
+}
 /* 一级菜单居中 */
 #nav .menus_items {
   position: absolute !important;
@@ -376,28 +529,33 @@ body {
   -o-transform: scale(0.5);
 }
 
-/* ========== 帧率显示器 ========== */
-/* 帧率检测 */
-#fps {
-  position: fixed;
-  /* 指定位置 */
-  left: 10px;
-  bottom: 10px;
-  z-index: 1919810;
+/* ========== 强制禁用所有入场动画 ========== */
+#content-inner,
+#footer,
+#page-header,
+#nav,
+#site-title,
+#site-subtitle,
+canvas,
+#web_bg {
+  animation: none !important;
+}
+.recent-post-item,
+.recent-post-info {
+  animation: none !important;
+  transition: none !important;
 }
 
-[data-theme="light"] #fps {
-  background-color: rgba(255, 255, 255, 0.3); /* 调整透明度为 0.6 */
-  backdrop-filter: var(--backdrop-filter); /* 标准支持 */
-  -webkit-backdrop-filter: var(--backdrop-filter); /* Safari 兼容性 */
-  padding: 4px;
-  border-radius: 4px;
+/* ========== 首页卡片标题限制1行、最小高度 ========== */
+#recent-posts .recent-post-item:has(.post_cover) {
+  min-height: 280px;
 }
 
-[data-theme="dark"] #fps {
-  background-color: rgba(0, 0, 0, 0.6); /* 调整透明度为 0.6 */
-  backdrop-filter: var(--backdrop-filter); /* 标准支持 */
-  -webkit-backdrop-filter: var(--backdrop-filter); /* Safari 兼容性 */
-  padding: 4px;
-  border-radius: 4px;
+#recent-posts .recent-post-item:has(.post_cover) .article-title {
+  -webkit-line-clamp: 1 !important;
+}
+
+/* ========== 隐藏文章内所有 HR ========== */
+#article-container hr {
+  display: none;
 }

@@ -1,0 +1,182 @@
+---
+title: LeetCode2615.等值距离和【中等】
+date: 2026-04-23 10:00:00
+tags: [哈希表, 前缀和, 数学优化]
+categories: 算法学习
+cover: /img/leetcode.jpg
+---
+
+# LeetCode 2615. 等值距离和
+
+> **题目链接**: https://leetcode.cn/problems/sum-of-distances/  
+> **日期**: 2026-04-23  
+> **难度**: Medium  
+> **标签**: 哈希表、前缀和、数学优化
+
+---
+
+## 一、题目描述
+
+给定一个整数数组 `nums`，构造数组 `arr`，使得 `arr[i]` 等于所有满足 `nums[j] == nums[i]` 且 `j != i` 的 `|i - j|` 之和。如果不存在这样的 `j`，则 `arr[i] = 0`。
+
+**示例 1：**
+
+```
+输入：nums = [1,3,1,1,2]
+输出：[5,0,3,4,0]
+
+解释：
+i = 0：nums[0] == nums[2] == nums[3]，arr[0] = |0-2| + |0-3| = 5
+i = 1：没有其他位置的值为 3，arr[1] = 0
+i = 2：nums[2] == nums[0] == nums[3]，arr[2] = |2-0| + |2-3| = 3
+i = 3：nums[3] == nums[0] == nums[2]，arr[3] = |3-0| + |3-2| = 4
+i = 4：没有其他位置的值为 2，arr[4] = 0
+```
+
+---
+
+## 二、踩坑回顾
+
+### 第一次尝试：暴力枚举
+
+```cpp
+vector<long long> distance(vector<int>& nums) {
+    int n = nums.size();
+    vector<long long> arr;
+    for (int i = 0; i < n; i++) {
+        long long distI = 0;
+        for (int j = 0; j < n; j++) {
+            if (nums[j] == nums[i] && i != j) {
+                distI += abs(i - j);
+            }
+        }
+        arr.push_back(distI);
+    }
+    return arr;
+}
+```
+
+双重循环，时间复杂度 `O(n²)`，不出意外地超时了。
+
+### 关键洞察
+
+问题在于对每个 `i`，都要遍历所有同值位置计算距离。有没有办法把"遍历同值元素"这一步优化掉？
+
+注意到：**相同值的下标是天然有序的**（因为我们按顺序遍历 `nums`），所以对于同一组下标 `[p₀, p₁, p₂, ..., pₖ₋₁]`，可以用数学公式直接算每个位置的距离和。
+
+---
+
+## 三、核心公式推导
+
+设同一值的下标数组为 `pos = [p₀, p₁, ..., pₖ₋₁]`（已排序）。
+
+对于第 `i` 个位置 `pᵢ`，它到所有其他同值位置的距离和为：
+
+```
+∑|pᵢ - pⱼ| (j ≠ i)
+```
+
+拆成左右两部分：
+
+```
+= ∑(pᵢ - pⱼ) (j < i)  +  ∑(pⱼ - pᵢ) (j > i)
+= pᵢ × i - (p₀ + p₁ + ... + pᵢ₋₁)  +  (pᵢ₊₁ + ... + pₖ₋₁) - pᵢ × (k - i - 1)
+```
+
+定义：
+- `leftCount = i`（左侧元素个数）
+- `rightCount = k - i - 1`（右侧元素个数）
+- `sumLeft = preSum[i]`（前 i 个元素之和）
+- `sumRight = preSum[k] - preSum[i + 1]`（后 k-i-1 个元素之和）
+
+最终公式：
+
+```
+dist = pᵢ × leftCount - sumLeft + sumRight - pᵢ × rightCount
+```
+
+有了前缀和数组 `preSum`，每个位置的距离和都可以 `O(1)` 计算。
+
+---
+
+## 四、代码实现
+
+```cpp
+class Solution {
+public:
+    vector<long long> distance(vector<int>& nums) {
+        int n = nums.size();
+        vector<long long> arr(n, 0);
+
+        unordered_map<int, vector<int>> umap;
+        for (int i = 0; i < n; i++) {
+            umap[nums[i]].push_back(i);
+        }
+
+        for (auto& [k, v] : umap) {
+            int len = v.size();
+            if (len > 1) {
+                vector<long long> preSum(len + 1, 0);
+                for (int i = 0; i < len; i++) {
+                    preSum[i + 1] = preSum[i] + v[i];
+                }
+
+                for (int i = 0; i < len; i++) {
+                    long long pi = v[i];
+                    long long leftCount = i;
+                    long long rightCount = len - i - 1;
+                    long long sumLeft = preSum[i];
+                    long long sumRight = preSum[len] - preSum[i + 1];
+                    long long dist = (pi * leftCount - sumLeft)
+                                   + (sumRight - pi * rightCount);
+                    arr[pi] = dist;
+                }
+            }
+        }
+        return arr;
+    }
+};
+```
+
+---
+
+## 五、踩坑总结
+
+### 错误清单
+
+| 错误 | 问题 | 修正 |
+|------|------|------|
+| `arr.push_back()` | 打乱顺序 | 预分配 `arr(n, 0)`，按原下标 `arr[v[i]]` 填入 |
+| `leftCount = pi` | 混淆组内索引和实际下标 | `leftCount = i`（组内索引才是左侧个数）|
+| `rightCount = len - pi - 1` | 同上 | `rightCount = len - i - 1` |
+| `sumLeft / sumRight` 用 `int` | 可能溢出（下标可达 10⁵，前缀和可达 10¹⁰）| 改为 `long long` |
+
+### 为什么 `v[i]` 和 `i` 不能混淆？
+
+- `i` 是**组内索引**，表示第几个位置（从 0 开始）
+- `v[i]` 是**实际数组下标**，即题目中的位置 `pᵢ`
+
+公式中的系数要用 `i`（因为是"第几个"，决定左右个数），而实际距离要用 `v[i]`（因为是"实际位置值"，决定距离大小）。
+
+---
+
+## 六、复杂度分析
+
+| 维度 | 分析 |
+|------|------|
+| **时间** | O(n) - 遍历一次 O(n)，每个分组内前缀和 O(k)，总 O(n) |
+| **空间** | O(n) - 哈希表存所有下标，前缀和数组 |
+
+---
+
+## 七、一句话总结
+
+> **相同值按下标聚合成有序数组后，每个位置的距离和可以用"元素值 × 个数 - 前缀和"的公式 O(1) 算出，总复杂度 O(n)。**
+
+---
+
+## 八、相关题目
+
+- [LeetCode 2250. 统计包含每个点的矩形数目](https://leetcode.cn/problems/count-number-of-rectangles-containing-each-point/) - 二维前缀和
+- [LeetCode 238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/) - 前后缀分解
+- [LeetCode 面试题 17.05. 字母与数字](https://leetcode.cn/problems/find-longest-subarray-lcci/) - 前缀和变形

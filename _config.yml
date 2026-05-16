@@ -8,11 +8,11 @@
 # --------------------------------------
 # 站点信息
 # --------------------------------------
-title: 爱吃薯片的熊猫の技术小站          # 网站标题
-subtitle: "记录学习与成长"              # 网站副标题
+title: Chippandaの技术小站          # 网站标题
+subtitle: ""                      # 网站副标题
 description: "Dream big Work hard Stay focused"  # 网站描述（用于 SEO）
 keywords:                               # 网站关键词（用于 SEO），多个用逗号分隔
-author: 爱吃薯片的熊猫                  # 作者名
+author: Chippanda                       # 作者名
 language:                               # 语言
   - zh-CN                               # 简体中文
   - en                                  # 英文
@@ -186,16 +186,16 @@ magnet:
   devide: 2                             # 分隔数
   display:
     - name: 学习笔记                    # 分类名
-      display_name: 爱吃薯片的熊猫の学习笔记
+      display_name: Chippandaの学习笔记
       icon: 📚                           # 图标
     - name: 生活趣闻
-      display_name: 爱吃薯片的熊猫の生活趣闻
+      display_name: Chippandaの生活趣闻
       icon: 🐱‍👓
     - name: 个人项目
-      display_name: 爱吃薯片的熊猫の个人项目
+      display_name: Chippandaの个人项目
       icon: 👩‍💻
     - name: 算法学习
-      display_name: 爱吃薯片的熊猫の算法学习
+      display_name: Chippandaの算法学习
       icon: 💡
   color_setting:
     text_color: black                   # 文字颜色

@@ -1,0 +1,289 @@
+---
+title: LeetCode1855.下标对中的最大距离【中等】
+date: 2026-04-19 10:00:00
+tags: [二分查找, 双指针, 单调性利用]
+categories: 算法学习
+cover: /img/leetcode.jpg
+---
+
+# LeetCode 1855. 下标对中的最大距离
+
+> **题目链接**: https://leetcode.cn/problems/maximum-distance-between-a-pair-of-values/  
+> **日期**: 2026-04-19  
+> **难度**: Medium  
+> **标签**: 二分查找、双指针、单调性利用
+
+---
+
+## 一、题目描述
+
+给定两个**非递增**整数数组 `nums1` 和 `nums2`，下标从 0 开始。
+
+定义一个**有效下标对** `(i, j)` 需要满足：
+- `0 <= i < nums1.length`
+- `0 <= j < nums2.length`
+- `i <= j`
+- `nums1[i] <= nums2[j]`
+
+该下标对的**距离**定义为 `j - i`。
+
+求所有有效下标对中的**最大距离**。如果不存在有效下标对，返回 `0`。
+
+---
+
+## 二、踩坑回顾
+
+### 第一次尝试：暴力枚举
+
+```cpp
+for (int i = 0; i < n1; i++) {
+    for (int j = 0; j < n2; j++) {
+        if (i <= j && nums1[i] <= nums2[j]) {
+            res = max(res, j - i);
+        }
+    }
+}
+```
+
+`O(n1 × n2)` 的复杂度，数据范围 `10^5` 直接爆炸。
+
+### 第二次尝试：二分答案
+
+既然是求最大距离，自然想到二分答案——猜测一个距离 `mid`，检查是否存在满足条件的下标对。
+
+```cpp
+bool check(vector<int>& nums1, vector<int>& nums2, int dist) {
+    for (int i = 0; i < nums1.size(); i++) {
+        int j = i + dist;
+        if (j < nums2.size() && nums1[i] <= nums2[j]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int maxDistance(vector<int>& nums1, vector<int>& nums2) {
+    int left = 0, right = nums2.size() - 1;
+    while (left < right) {
+        int mid = (left + right + 1) / 2;  // 关键：向上取整
+        if (check(nums1, nums2, mid)) {
+            left = mid;   // 取最大值，left 保留
+        } else {
+            right = mid - 1;
+        }
+    }
+    return left;
+}
+```
+
+这个做法正确，`O(n log n)` 能通过。但提示说还有更优的 `O(n)` 解法。
+
+---
+
+## 三、提示的启发：利用非递增性质
+
+提示说两个数组都是**非递增**的。这意味着：
+- `nums1[i]` 随 `i` 增大而减小（或不变）
+- `nums2[j]` 随 `j` 增大而减小（或不变）
+
+这个单调性本来是我忽略的。那双指针怎么用在这里？
+
+---
+
+## 四、双指针解法详解
+
+### 核心思路
+
+对于每个 `i`，我们要找它能到达的最远 `j`（`j >= i` 且 `nums1[i] <= nums2[j]`）。
+
+> [!NOTE]
+>
+> 关键观察：**当 `i` 增大时，`nums1[i]` 只会变小，条件只会更容易满足，所以 `j` 不需要回退。**
+
+```cpp
+int maxDistance(vector<int>& nums1, vector<int>& nums2) {
+    int ans = 0, j = 0;
+    for (int i = 0; i < nums1.size(); i++) {
+        while (j < nums2.size() && nums1[i] <= nums2[j]) {
+            j++;
+        }
+        if (j > i) ans = max(ans, j - i - 1);
+    }
+    return ans;
+}
+```
+
+### 逐行解析
+
+```
+初始：j = 0
+
+i = 0：j 从 0 开始往右走，走到第一个不满足 nums1[0] <= nums2[j] 的位置停下
+       此时 j-1 是 i=0 能到达的最远位置
+       ans = max(ans, (j-1) - 0)
+
+i = 1：j 从上一轮停下的位置继续（不需要回退！）
+       因为 nums1[1] <= nums1[0]，条件更容易满足
+       j 继续往右走，更新 ans
+
+... 以此类推
+```
+
+### 为什么 j 可以只增不减？
+
+这是本题最核心的洞察。
+
+上一轮 `i-1` 在某个 `j` 处停下来了（`nums1[i-1] > nums2[j]` 不满足）。
+
+这一轮 `i` 的 `nums1[i]` 更小（或相等），所以 `nums1[i] <= nums2[j]` **有可能重新满足**，于是 `j` 可以继续右移。
+
+但如果上一轮 `j` 已经不满足了，下一轮 `i` 更小，`nums1[i] <= nums2[j-1]` 只会更容易满足，**不需要回退到更小的 `j` 去检查**，因为那些更小的 `j` 上一轮已经探索过了，对答案没有更大贡献。
+
+### 复杂度分析
+
+- `j` 从 `0` 最多走到 `nums2.size()`，全程不回退：`O(n2)`
+- 外层 `i` 遍历 `nums1`：`O(n1)`
+- 总复杂度：`O(n1 + n2)`
+
+---
+
+## 五、与二分答案的对比
+
+| 维度 | 二分答案 | 双指针 |
+|------|---------|--------|
+| 时间复杂度 | `O(n log n)` | `O(n)` |
+| 空间复杂度 | `O(1)` | `O(1)` |
+| 依赖条件 | 需要能检查距离是否可行 | 需要数组单调（本题非递增） |
+| 代码复杂度 | 稍复杂（check 函数 + 二分模板） | 简洁（一个 for 循环） |
+
+双指针赢在利用了数组的单调性，把 `log n` 的因子优化掉了。
+
+---
+
+## 六、二分答案（求最大值模板）
+
+做这道题的过程中，我发现自己对二分答案（在答案范围内猜最优解）的理解还不够系统。这里总结一下本题用到的**求最大值模板**。
+
+### 求最大值模板
+
+目标：在某个范围 `[L, R]` 内找**满足条件的最大值**。
+
+```cpp
+while (left < right) {
+    int mid = (left + right + 1) / 2;  // 关键：向上取整
+    if (check(mid)) {
+        left = mid;   // 可行，保留 mid，向右找更大值
+    } else {
+        right = mid - 1;
+    }
+}
+return left;
+```
+
+特点：`while (left < right)`，`mid` **必须**向上取整（当区间长度为 2 时，否则死循环）。
+
+### 为什么 mid 要向上取整？
+
+当 `left = 3, right = 4` 时：
+- 向下取整：`mid = (3 + 4) / 2 = 3`，如果 `check(3)` 成立，执行 `left = mid = 3`，区间不变，死循环。
+- 向上取整：`mid = (3 + 4 + 1) / 2 = 4`，如果 `check(4)` 成立，执行 `left = 4`，循环结束。
+
+**口诀**：只要看到 `left = mid`，`mid` 就必须写成 `(left + right + 1) / 2`。
+
+> [!CAUTION]
+>
+> 注意：这个模板只适用于求最大值！
+
+昨天刷 1665 题时翻车了——求最小值用的是**不同的模板**：
+
+| 类型 | mid 公式 | check 成立时 | check 不成立时 |
+|------|---------|-------------|---------------|
+| **求最大值** | `(l+r+1)/2` ↑ | `l = mid` | `r = mid - 1` |
+| **求最小值** | `(l+r)/2` ↓ | `r = mid` | `l = mid + 1` |
+
+> 📎 **两种模板的详细对比+练习题** → 见《二分答案模板 —— 求最大值 vs 求最小值》
+> 📎 **查找型二分（找第一个 ≥ target）** → 见《由一道题目所引发的对于二分查找的思考》
+
+---
+
+## 七、完整代码
+
+### 版本一：二分答案（O(n log n)）
+
+```cpp
+class Solution {
+public:
+    bool check(vector<int>& nums1, vector<int>& nums2, int dist) {
+        for (int i = 0; i < nums1.size(); i++) {
+            int j = i + dist;
+            if (j < nums2.size() && nums1[i] <= nums2[j]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    int maxDistance(vector<int>& nums1, vector<int>& nums2) {
+        int left = 0, right = nums2.size() - 1;
+        while (left < right) {
+            int mid = (left + right + 1) / 2;
+            if (check(nums1, nums2, mid)) {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
+    }
+};
+```
+
+### 版本二：双指针（O(n)）- 推荐
+
+```cpp
+class Solution {
+public:
+    int maxDistance(vector<int>& nums1, vector<int>& nums2) {
+        int ans = 0, j = 0;
+        for (int i = 0; i < nums1.size(); i++) {
+            while (j < nums2.size() && nums1[i] <= nums2[j]) {
+                j++;
+            }
+            if (j > i) {
+                ans = max(ans, j - i - 1);
+            }
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+## 八、心得总结
+
+### 什么情况下能用双指针？
+
+**两个有序序列，一个指针移动时另一个指针单调移动**。这类问题的特征：
+- 两个数组都是单调的（递增/递减）
+- 找最大距离/最长子数组/合并有序数组
+
+### 什么时候用二分答案？
+
+- 数组不是完全有序，但可以设计 `check` 函数判断某个猜测是否可行
+- 数据范围大，二分能快速收敛
+- 二分答案 `O(n log n)` 通常已经足够好，能想到双指针 `O(n)` 更好但不一定必要
+
+### 这道题的收获
+
+1. **二分答案和双指针不是互斥的**：先想到二分答案是正常的，双指针是锦上添花的优化
+2. **单调性是算法的朋友**：看到有序数组，就该条件反射想到双指针或二分
+3. **两种二分模板不能混用**：查找型用 `<=` + 记录答案，求最优解型用 `<` + 保留可行解
+
+---
+
+## 九、相关题目
+
+- [LeetCode 167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
+- [LeetCode 88. 合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array/)
+- [LeetCode 34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/)

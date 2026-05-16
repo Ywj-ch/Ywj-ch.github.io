@@ -1,0 +1,139 @@
+---
+title: LeetCode2864.使二进制字符串交替的最小翻转次数【中等】
+date: 2026-03-07 10:00:00
+tags: [滑动窗口, 字符串, 贪心]
+categories: 算法学习
+cover: /img/leetcode.jpg
+---
+
+# LeetCode 2864. 使二进制字符串交替的最小翻转次数
+
+> **题目链接**: https://leetcode.cn/problems/minimum-number-of-flips-to-make-the-binary-string-alternating/  
+> **日期**: 2026-03-07  
+> **难度**: Medium  
+> **标签**: 滑动窗口、字符串、贪心
+
+---
+
+## 题目描述
+
+给定一个二进制字符串 `s`，你可以执行两种操作：
+
+1. 将首元素移到末尾（循环移位）
+2. 任选一个元素反转（0→1 或 1→0）
+
+求将 `s` 转换成交替字符串（如 "010101..." 或 "101010..."）所需的最少操作 2 的次数。
+
+---
+
+## 解题思路
+
+### 关键洞察
+
+1. **操作 1 的本质**：不需要真正去截取首元素放到末尾，而是通过 **拼接 `s + s`** 来模拟循环移位。这样问题转化为：在长度为 `2n` 的字符串中，找一个长度为 `n` 的窗口，使其最接近目标交替串。
+
+2. **滑动窗口优化**：如果暴力遍历每个窗口的所有元素，时间复杂度为 O(n²)，不可接受。关键观察是：**窗口每次只滑动一格，只有左右边界元素发生变化**，中间元素不变。因此可以用一个全局变量 `diff` 维护当前窗口的总差异数。
+
+3. **窗口滑动规则**：
+   - 离开的旧字符：如果原本与目标不同，差异数 `-1`
+   - 进入的新字符：如果与目标不同，差异数 `+1`
+
+4. **两种目标模式**：交替串有两种可能：
+   - 以 `0` 开头：`010101...`
+   - 以 `1` 开头：`101010...`
+   需要分别计算两种情况，取最小值。
+
+---
+
+## 代码实现
+
+```cpp
+class Solution {
+public:
+    int minFlips(string s) {
+        int n = s.size();
+        string doubleS = s + s;
+        
+        // 构建两种目标交替串
+        string target0 = "", target1 = "";
+        for (int i = 0; i < n; i++) {
+            target0 += "01";
+            target1 += "10";
+        }
+        
+        // 初始化第一个窗口的差异数
+        int diff0 = 0, diff1 = 0;
+        for (int i = 0; i < n; i++) {
+            if (doubleS[i] != target0[i]) diff0++;
+            if (doubleS[i] != target1[i]) diff1++;
+        }
+        
+        int res = min(diff0, diff1);
+        
+        // 滑动窗口：向右移动 n 次
+        for (int i = n; i < 2 * n; i++) {
+            int leftIndex = i - n;
+            int rightIndex = i;
+            
+            // 移除左边界元素的影响
+            if (doubleS[leftIndex] != target0[leftIndex]) diff0--;
+            if (doubleS[leftIndex] != target1[leftIndex]) diff1--;
+            
+            // 添加右边界元素的影响
+            if (doubleS[rightIndex] != target0[rightIndex]) diff0++;
+            if (doubleS[rightIndex] != target1[rightIndex]) diff1++;
+            
+            // 更新最小值
+            res = min(res, min(diff0, diff1));
+        }
+        
+        return res;
+    }
+};
+```
+
+---
+
+## 复杂度分析
+
+| 复杂度 | 分析 |
+|--------|------|
+| 时间复杂度 | O(n) - 构建目标串 O(n)，初始化窗口 O(n)，滑动窗口 O(n) |
+| 空间复杂度 | O(n) - `doubleS` 和两个目标串各占 O(n) |
+
+---
+
+## 心得总结
+
+### 思维转折点
+
+一开始的思路停留在**模拟字符串操作**：每次拼接后遍历整个字符串与目标串比较。这个思路虽然直观，但时间复杂度 O(n²) 会超时。
+
+真正的突破来自两点：
+
+1. **`s + s` 的巧妙转换**：将循环移位问题转化为滑动窗口问题，这是本题的**第一层关键**。
+2. **滑动窗口的增量更新**：意识到窗口滑动时只需处理边界元素，这是**第二层关键**，也是滑动窗口思想的精髓。
+
+### 滑动窗口的核心思想
+
+提到滑动窗口，就要想到**避免重复遍历窗口内所有元素**。不同题目有不同的维护方式：
+
+| 题目类型 | 维护方式 |
+|----------|----------|
+| 最长连续子数组 | 按条件收缩左边界 |
+| 滑动窗口最大值 | 单调队列 (deque) |
+| 本题 | 增量更新差异计数 |
+
+### 经验教训
+
+- 看到**循环/旋转**问题，优先考虑 `s + s` 拼接技巧
+- 滑动窗口的核心是**利用相邻窗口的重叠部分**，只做增量计算
+- 交替串问题通常有两种模式，都要考虑
+
+---
+
+## 相关题目
+
+- [LeetCode 1561. 你可以获得的最大硬币数目](https://leetcode.cn/problems/maximum-number-of-coins-you-can-get/)
+- [LeetCode 76. 最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/)
+- [LeetCode 209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
