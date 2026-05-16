@@ -331,6 +331,11 @@ body {
 #aside-content > .card-widget.card-info > #card-info-btn {
   background-color: #3eb8be;
   border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+#aside-content > .card-widget.card-info > #card-info-btn:hover {
+  transform: scale(1.05);
 }
 
 /* ========== 鼠标跟随 ========== */

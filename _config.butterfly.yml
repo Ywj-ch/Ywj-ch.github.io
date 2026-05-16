@@ -444,9 +444,9 @@ wordcount:
 
 # Busuanzi count for PV / UV in site
 busuanzi:
-  site_uv: true
-  site_pv: true
-  page_pv: true
+  site_uv: false
+  site_pv: false
+  page_pv: false
 
 # --------------------------------------
 # Math
@@ -619,10 +619,10 @@ facebook_comments:
 # Twikoo
 # https://github.com/imaegoo/twikoo
 twikoo:
-  envId:
+  envId: https://ywj-twikoo.vercel.app
   region:
   # Use Twikoo visitor count as the page view count
-  visitor: false
+  visitor: true
   option:
 
 # Giscus
